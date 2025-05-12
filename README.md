@@ -135,16 +135,18 @@ REFERENCES issued_status(issued_id);
 -- "978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.')"
 
 ```sql
-INSERT INTO books(isbn, book_title, category, rental_price, status, author, publisher)
-VALUES('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
+INSERT INTO books (isbn, book_title, category, rental_price, status, author, publisher)
+VALUES
+('978-1-60129-456-2', 'To Kill a Mockingbird', 'Classic', 6.00, 'yes', 'Harper Lee', 'J.B. Lippincott & Co.');
 SELECT * FROM books;
 ```
 **Task 2: Update an Existing Member's Address**
 
 ```sql
 UPDATE members
-SET member_address = '125 Oak St'
-WHERE member_id = 'C103';
+SET member_address = '125 Main St'
+WHERE member_id = 'C101';
+SELECT * FROM members;
 ```
 
 **Task 3: Delete a Record from the Issued Status Table**
@@ -152,13 +154,15 @@ WHERE member_id = 'C103';
 
 ```sql
 DELETE FROM issued_status
-WHERE   issued_id =   'IS121';
+WHERE issued_id = 'IS121'
+SELECT * FROM issued_status;
 ```
 
 **Task 4: Retrieve All Books Issued by a Specific Employee**
 -- Objective: Select all books issued by the employee with emp_id = 'E101'.
 ```sql
-SELECT * FROM issued_status
+SELECT * 
+FROM issued_status
 WHERE issued_emp_id = 'E101'
 ```
 
@@ -167,12 +171,13 @@ WHERE issued_emp_id = 'E101'
 -- Objective: Use GROUP BY to find members who have issued more than one book.
 
 ```sql
-SELECT
-    issued_emp_id,
-    COUNT(*)
+SELECT 
+issued_emp_id,
+COUNT (issued_id) AS issued_books
 FROM issued_status
 GROUP BY 1
-HAVING COUNT(*) > 1
+HAVING COUNT(issued_id) > 1
+ORDER BY 2 DESC 
 ```
 
 ### 3. CTAS (Create Table As Select)
